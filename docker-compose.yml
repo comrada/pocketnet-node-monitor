@@ -1,6 +1,28 @@
 services:
+  pocketnet.core:
+    container_name: pocketnet.core
+    image: pocketnetteam/pocketnet.core:latest
+    restart: on-failure
+    stop_grace_period: 10m
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - /pocketcoin:/home/pocketcore/.pocketcoin
+    ports:
+      - "37070:37070"
+      - "38081:38081"
+      - "38881:38881"
+      - "8087:8087"
+      - "8887:8887"
+    logging:
+      driver: "local"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
   log-watcher:
-    image: comrada/pocketnet-node-monitor:latest
     build:
       context: .
     container_name: log-watcher
@@ -9,3 +31,5 @@ services:
     environment:
       - TELEGRAM_BOT_TOKEN=<paste-your-token>
       - TELEGRAM_CHAT_ID=<paste-your-chat-id>
+    depends_on:
+      - pocketnet.core

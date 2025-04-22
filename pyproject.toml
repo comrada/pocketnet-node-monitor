@@ -1,0 +1,18 @@
+[project]
+name = "pocketnet.node-monitor"
+version = "0.1.0"
+description = "Monitoring of the pocketnet.core node container"
+authors = [
+    { name = "Comrada", email = "comrada@proton.me" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "docker (>=7.1.0,<8.0.0)"
+]
+
+[tool.poetry]
+name = "log-watcher"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

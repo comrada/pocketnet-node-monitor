@@ -1,0 +1,11 @@
+services:
+  log-watcher:
+    image: comrada/pocketnet-node-monitor:latest
+    build:
+      context: .
+    container_name: log-watcher
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    environment:
+      - TELEGRAM_BOT_TOKEN=<paste-your-token>
+      - TELEGRAM_CHAT_ID=<paste-your-chat-id>

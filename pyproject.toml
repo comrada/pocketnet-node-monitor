@@ -1,15 +1,21 @@
 [project]
 name = "pocketnet.node-monitor"
-version = "0.1.0"
+version = "0.2.0"
 description = "Monitoring of the pocketnet.core node container"
 authors = [
     { name = "Comrada", email = "comrada@proton.me" }
 ]
 requires-python = ">=3.13"
 dependencies = [
-    "docker (>=7.1.0,<8.0.0)"
+    "docker (>=7.1.0,<8.0.0)",
+    "apscheduler (>=3.11.0, <4.0.0)",
+    "riprova (>=0.3.1, <0.4.0)",
+    "python-bitcoinlib (>=0.12.2, <0.13.0)",
 ]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+flask = "^3.0.0"

@@ -7,6 +7,8 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout code
@@ -41,5 +43,23 @@ jobs:
           context: .
           push: true
           tags: |
-            comrada/pocketnet-node-monitor:${{ steps.version.outputs.VERSION }}
-            comrada/pocketnet-node-monitor:latest
+            ${{ vars.DOCKERHUB_USERNAME }}/pocketnet-node-monitor:${{ steps.version.outputs.VERSION }}
+            ${{ vars.DOCKERHUB_USERNAME }}/pocketnet-node-monitor:latest
+
+      - name: Check if git tag exists
+        id: tag_check
+        run: |
+          TAG="${{ steps.version.outputs.VERSION }}"
+          if git ls-remote --tags origin "refs/tags/$TAG" | grep "$TAG" >/dev/null; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create Git tag
+        if: steps.tag_check.outputs.exists == 'false'
+        run: |
+          git config user.name "Comrada"
+          git config user.email "comrada@proton.me"
+          git tag "${{ steps.version.outputs.VERSION }}"
+          git push origin "${{ steps.version.outputs.VERSION }}"

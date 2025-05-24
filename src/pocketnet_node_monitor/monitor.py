@@ -19,6 +19,8 @@ RPC_USER = os.environ.get("RPC_USER")
 RPC_PASSWORD = os.environ.get("RPC_PASSWORD")
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = int(os.getenv("TELEGRAM_CHAT_ID", 0))
+INTERVAL_STACKING_SEC = int(os.getenv("INTERVAL_STACKING_SEC", 120))
+INTERVAL_BALANCE_SEC = int(os.getenv("INTERVAL_BALANCE_SEC", 300))
 DOCKER_BASE_URL = os.getenv("DOCKER_BASE_URL", "unix://var/run/docker.sock")
 
 telegram_client = TelegramClient(TELEGRAM_TOKEN, TELEGRAM_CHAT_ID)
@@ -42,7 +44,7 @@ def check_staking():
 
 def start():
     scheduler = BlockingScheduler()
-    scheduler.add_job(get_balance, 'interval', seconds=60)
-    scheduler.add_job(check_staking, 'interval', seconds=120)
+    scheduler.add_job(get_balance, 'interval', seconds=INTERVAL_BALANCE_SEC)
+    scheduler.add_job(check_staking, 'interval', seconds=INTERVAL_STACKING_SEC)
     scheduler.add_job(check_github_release, 'cron', hour=0, minute=0)
     scheduler.start()

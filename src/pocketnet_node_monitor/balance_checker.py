@@ -13,7 +13,6 @@ class BalanceChecker:
 
     def check(self):
         new_balance = self.rpc_client.get_wallet_balance()
-        logging.info(f"Balance: `{new_balance}`")
         if new_balance != self.wallet_balance:
             difference = new_balance - self.wallet_balance
             wallet_balance = new_balance

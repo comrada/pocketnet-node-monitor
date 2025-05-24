@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 import socket
 import sys
 from decimal import Decimal
@@ -12,7 +13,7 @@ from typing import Union
 import riprova
 from bitcoin.rpc import JSONRPCError, InWarmupError, Proxy
 
-TIMEOUT = 30
+TIMEOUT = int(os.getenv("RPC_TIMEOUT", 30))
 RETRY_EXCEPTIONS = (InWarmupError, ConnectionError, socket.timeout)
 RpcResult = Union[Dict[str, Any], List[Any], str, int, float, bool, None]
 
@@ -57,7 +58,7 @@ class RpcClient:
     def call(self, *args) -> RpcResult:
         try:
             result = self.rpc_client().call(*args)
-            logging.debug("Result:   %s", result)
+            logging.debug("Result: %s", result)
             return result
         except riprova.exceptions.RetryError as e:
             logging.error("Refresh failed during retry. Cause: " + str(e))

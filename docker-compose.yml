@@ -22,14 +22,23 @@ services:
         max-size: "10m"
         max-file: "3"
 
-  log-watcher:
+  node-monitor:
     build:
       context: .
-    container_name: log-watcher
+    image: comrada/pocketnet-node-monitor
+    container_name: node-monitor
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     environment:
       - TELEGRAM_BOT_TOKEN=<paste-your-token>
       - TELEGRAM_CHAT_ID=<paste-your-chat-id>
+      - RPC_HOST=pocketnet.core
+      - RPC_PORT=8899
+      - RPC_USER=user
+      - RPC_PASSWORD=pass
+      - RPC_TIMEOUT=60
+      - INTERVAL_STACKING_REWARDS_SEC=120
+      - INTERVAL_STACKING_MIN=60
+      - INTERVAL_BALANCE_SEC=300
     depends_on:
       - pocketnet.core

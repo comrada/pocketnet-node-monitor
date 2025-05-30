@@ -27,7 +27,7 @@ def test_staking_without_error(mock_docker_client_class, mock_telegram_client):
     watcher = LogWatcher(base_url="unix://var/run/docker.sock", telegram_client=mock_telegram_client)
     watcher.last_timestamp = datetime.now(timezone.utc) - timedelta(seconds=60)
 
-    watcher.check_staking()
+    watcher.check_staking_rewards()
 
     mock_telegram_client.send_message.assert_called_once()
 
@@ -48,7 +48,7 @@ def test_staking_with_error_1(mock_docker_client_class, mock_telegram_client):
     watcher = LogWatcher(base_url="unix://var/run/docker.sock", telegram_client=mock_telegram_client)
     watcher.last_timestamp = datetime.now(timezone.utc) - timedelta(seconds=60)
 
-    watcher.check_staking()
+    watcher.check_staking_rewards()
 
     mock_telegram_client.send_message.assert_not_called()
 
@@ -68,6 +68,6 @@ def test_staking_with_error_2(mock_docker_client_class, mock_telegram_client):
     watcher = LogWatcher(base_url="unix://var/run/docker.sock", telegram_client=mock_telegram_client)
     watcher.last_timestamp = datetime.now(timezone.utc) - timedelta(seconds=60)
 
-    watcher.check_staking()
+    watcher.check_staking_rewards()
 
     mock_telegram_client.send_message.assert_not_called()

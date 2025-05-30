@@ -1,6 +1,6 @@
 [project]
 name = "pocketnet.node-monitor"
-version = "0.2.0"
+version = "0.3.0"
 description = "Monitoring of the pocketnet.core node container"
 authors = [
     { name = "Comrada", email = "comrada@proton.me" }
@@ -20,3 +20,6 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry.group.dev.dependencies]
 flask = "^3.0.0"
 pytest = "^8.3.5"
+
+[tool.poetry.scripts]
+rpc-mock = "mock.rpc_mock_server:start"

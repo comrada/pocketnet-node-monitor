@@ -3,7 +3,6 @@ import logging
 import os
 import socket
 import sys
-from decimal import Decimal
 from functools import lru_cache
 from typing import Any
 from typing import Dict
@@ -70,9 +69,8 @@ class RpcClient:
             logging.error("RPC call did not return JSON. Bad credentials? " + str(e))
             sys.exit(1)
 
-    def get_wallet_balance(self) -> Decimal:
-        result = self.call("getwalletinfo")
-        if result:
-            return Decimal(result["balance"])
-        else:
-            return Decimal(0)
+    def get_wallet_info(self) -> RpcResult:
+        return self.call("getwalletinfo")
+
+    def get_stacking_info(self) -> RpcResult:
+        return self.call("getstakinginfo")

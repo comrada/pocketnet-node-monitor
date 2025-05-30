@@ -61,6 +61,23 @@ def rpc():
             "descriptors": False
         }
 
+    elif method == "getstakinginfo":
+        result = {
+            "enabled": True,
+            "staking": False,
+            "errors": "",
+            "currentblockweight": 102524,
+            "currentblocktx": 87,
+            "difficulty": 300569.3897715717,
+            "search-interval": 16,
+            "search-time": "2025-05-29T09:06:40Z",
+            "stake-time": "2025-04-21T09:51:12Z",
+            "weight": 16195250107,
+            "balance": 16195250107,
+            "netstakeweight": 343575490874245,
+            "expectedtime": 3182187
+        }
+
     else:
         return jsonify({
             "result": None,

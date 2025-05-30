@@ -18,7 +18,7 @@ class LogWatcher:
         self.telegram_client = telegram_client
         self.last_timestamp = datetime.now(timezone.utc) - timedelta(seconds=60)
 
-    def check_staking(self):
+    def check_staking_rewards(self):
         try:
             container = self.docker_client.containers.get(TARGET_CONTAINER_NAME)
         except docker.errors.NotFound:
@@ -36,7 +36,7 @@ class LogWatcher:
                     next_line = lines[i + 1] if i + 1 < len(lines) else ""
                     if not ERROR_PATTERN_1.search(next_line) and not ERROR_PATTERN_2.search(next_line):
                         logging.info(f"Found valid staking log: {line}")
-                        self.telegram_client.send_message(f"*Staking alert!*\n```\n{line}\n```")
+                        self.telegram_client.send_message("You got an award for stacking!")
                     i += 2
                 else:
                     i += 1

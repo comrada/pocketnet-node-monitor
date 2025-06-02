@@ -16,8 +16,8 @@ class BalanceChecker:
         new_balance = self.get_balance()
         if new_balance != self.wallet_balance:
             difference = new_balance - self.wallet_balance
-            wallet_balance = new_balance
-            message = f"Balance has been updated, new value: `{wallet_balance}`, change: `{difference}`"
+            self.wallet_balance = new_balance
+            message = f"Balance has been updated, new value: `{new_balance}`, change: `{difference}`"
             logging.info(message)
             self.telegram_client.send_message(message)
 

@@ -1,6 +1,6 @@
 [project]
 name = "pocketnet.node-monitor"
-version = "0.3.1"
+version = "0.3.2"
 description = "Monitoring of the pocketnet.core node container"
 authors = [
     { name = "Comrada", email = "comrada@proton.me" }

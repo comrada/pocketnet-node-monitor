@@ -19,7 +19,6 @@ class StackingChecker:
 
     def check(self):
         stacking_info = self.rpc_client.get_stacking_info()
-        print(stacking_info)
         error_message = None
         if not stacking_info["enabled"]:
             error_message = "Wallet is disabled!"

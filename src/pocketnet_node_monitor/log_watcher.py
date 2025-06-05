@@ -35,8 +35,8 @@ class LogWatcher:
                 if KEYWORD in line:
                     next_line = lines[i + 1] if i + 1 < len(lines) else ""
                     if not ERROR_PATTERN_1.search(next_line) and not ERROR_PATTERN_2.search(next_line):
-                        logging.info(f"Found valid staking log: {line}")
-                        self.telegram_client.send_message("You got an award for stacking!")
+                        logging.info(f"Found log entry relating to stacking reward: {line}")
+                        self.telegram_client.send_message("You got a reward for stacking!")
                     i += 2
                 else:
                     i += 1

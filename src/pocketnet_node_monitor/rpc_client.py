@@ -74,3 +74,6 @@ class RpcClient:
 
     def get_stacking_info(self) -> RpcResult:
         return self.call("getstakinginfo")
+
+    def get_stake_report(self) -> RpcResult:
+        return self.call("getstakereport")

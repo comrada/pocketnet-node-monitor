@@ -23,13 +23,15 @@ TELEGRAM_CHAT_ID = int(os.getenv("TELEGRAM_CHAT_ID", 0))
 INTERVAL_STACKING_REWARDS_SEC = int(os.getenv("INTERVAL_STACKING_REWARDS_SEC", 120))
 INTERVAL_STACKING_MIN = int(os.getenv("INTERVAL_STACKING_MIN", 60))
 INTERVAL_BALANCE_SEC = int(os.getenv("INTERVAL_BALANCE_SEC", 300))
-DOCKER_BASE_URL = os.getenv("DOCKER_BASE_URL", "unix://var/run/docker.sock")
+DOCKER_BASE_URL = os.getenv("DOCKER_BASE_URL") # unix://var/run/docker.sock
 
 telegram_client = TelegramClient(TELEGRAM_TOKEN, TELEGRAM_CHAT_ID)
 new_version_checker = NewVersionChecker(telegram_client, GithubClient())
 rpc_client = RpcClient(RPC_SCHEME, RPC_HOST, RPC_PORT, RPC_USER, RPC_PASSWORD)
 balance_checker = BalanceChecker(rpc_client, telegram_client)
-log_watcher = LogWatcher(DOCKER_BASE_URL, telegram_client)
+log_watcher = None
+if DOCKER_BASE_URL:
+    log_watcher = LogWatcher(DOCKER_BASE_URL, telegram_client)
 stacking_checker = StackingChecker(rpc_client, telegram_client)
 
 
@@ -42,11 +44,14 @@ def get_balance():
 
 
 def check_staking_rewards():
-    log_watcher.check_staking_rewards()
+    if log_watcher:
+        log_watcher.check_staking_rewards()
+    else:
+        stacking_checker.check_new_rewards()
 
 
 def check_stacking():
-    stacking_checker.check()
+    stacking_checker.check_status()
 
 
 def start():

@@ -49,8 +49,7 @@ services:
 You need to substitute the values of the required environment variables.
 Environment variables used in the monitor:
 
-- `DOCKER_BASE_URL` - URL through which the client can connect to the Docker API, default is
-  `unix://var/run/docker.sock`
+- `DOCKER_BASE_URL` - URL through which the client can connect to the Docker API, default is empty (JSON-RPC is used)
 - `RPC_HOST` - node hostname
 - `RPC_PORT` - node JSON-RPC port (defined by the `rpcport` parameter)
 - `RPC_SCHEME` - JSON-RPC scheme: `http` or `https` (default is `http`)

@@ -78,7 +78,6 @@ class PythonTelegramBot(BaseTelegramBot):
         await query.answer()
 
         rpc_result = await self.rpc_call(query.data)
-        print(rpc_result)
         if type(rpc_result) in (int, float):
             message = rpc_result
         else:

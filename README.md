@@ -71,10 +71,12 @@ following parameters in the `pocketcoin.conf` file:
 ```properties
 rpcbind=0.0.0.0
 rpcallowip=172.0.0.0/8
-rpcuser=<user>
-rpcpassword=<pass>
+rpcauth=user:8a993920f2fdd0aadf2cf146b5975b7d$f0d8d8cdb095132943e98ffff60f3b308b469b6403ff59d3566bd2c12f328bc2
 rpcport=8899
 ```
+
+To generate a password, execute the command: `poetry run gen-pass user pass` where `user` is your username and `pass` is
+its password.
 
 You should not open port 8899 to the outside of the node container docker, it is dangerous. In this case, the access
 will only be inside the Docker network.

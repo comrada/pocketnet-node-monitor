@@ -25,3 +25,4 @@ pytest = "^8.3.5"
 
 [tool.poetry.scripts]
 rpc-mock = "mock.rpc_mock_server:start"
+gen-pass = "pocketnet_node_monitor.rpcauth:main"

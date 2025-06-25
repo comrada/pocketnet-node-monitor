@@ -12,7 +12,6 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from pocketnet_node_monitor.balance_checker import BalanceChecker
 from pocketnet_node_monitor.base_telegram_bot import BaseTelegramBot
 from pocketnet_node_monitor.github_client import GithubClient
-from pocketnet_node_monitor.log_watcher import LogWatcher
 from pocketnet_node_monitor.new_version_checker import NewVersionChecker
 from pocketnet_node_monitor.python_telegram_bot import PythonTelegramBot
 from pocketnet_node_monitor.rpc_client import RpcClient
@@ -32,15 +31,11 @@ TELEGRAM_BOT_IMPL = os.getenv("TELEGRAM_BOT_IMPL", "python-telegram-bot")
 INTERVAL_STACKING_REWARDS_SEC = int(os.getenv("INTERVAL_STACKING_REWARDS_SEC", 120))
 INTERVAL_STACKING_MIN = int(os.getenv("INTERVAL_STACKING_MIN", 60))
 INTERVAL_BALANCE_SEC = int(os.getenv("INTERVAL_BALANCE_SEC", 300))
-DOCKER_BASE_URL = os.getenv("DOCKER_BASE_URL")  # unix://var/run/docker.sock
 
 telegram_client = TelegramClient(TELEGRAM_TOKEN, TELEGRAM_CHAT_ID)
 new_version_checker = NewVersionChecker(telegram_client, GithubClient())
 rpc_client = RpcClient(RPC_SCHEME, RPC_HOST, RPC_PORT, RPC_USER, RPC_PASSWORD)
 balance_checker = BalanceChecker(rpc_client, telegram_client)
-log_watcher = None
-if DOCKER_BASE_URL:
-    log_watcher = LogWatcher(DOCKER_BASE_URL, telegram_client)
 stacking_checker = StackingChecker(rpc_client, telegram_client)
 
 
@@ -53,10 +48,7 @@ async def get_balance():
 
 
 async def check_staking_rewards():
-    if log_watcher:
-        log_watcher.check_staking_rewards()
-    else:
-        stacking_checker.check_new_rewards()
+    stacking_checker.check_new_rewards()
 
 
 async def check_stacking():
